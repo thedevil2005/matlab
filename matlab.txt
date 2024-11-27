@@ -1,0 +1,338 @@
+Integration:
+x = input('Enter xi values: ');
+y = input('Enter yi values: ');
+h = x(2)-x(1);
+n = length(x);
+if mod(n-1,2) == 0
+ disp("Using Simpson's 1/3rd rule");
+ I = y(1)+y(n);
+ for i = 2:2:n-1
+ I = I+4*y(i);
+ end
+ for i = 3:2:n-2
+ I =I+2*y(i);
+ end
+ I = (h/3)*I;
+else
+ disp("Using Trapezoidal rule");
+ I = 0;
+ for i = 2:(n-1)
+ I = I+y(i);
+ end
+ I = I*2+y(1)+y(n);
+ I = (h/2)*I;
+end
+disp(["The integral result is: ", num2str(I)]);
+
+
+%forward Interpolation
+x = input('Enter xi values as an array: ');
+y = input('Enter yi values as an array: ');
+X = input('Enter X value: ');
+h = x(2) - x(1);
+n = length(x);
+D = zeros(n);
+for i = 1:n
+ D(i,1) = y(i);
+end
+for j = 2:n
+ for i = 1:(n - j + 1)
+ D(i,j) = D(i + 1, j - 1) - D(i, j - 1);
+ end
+end
+Y = y(1);
+product = 1;
+fact = 1;
+for i = 1:(n - 1)
+ product = product * (X - x(i)) / h;
+ fact = fact * (1 / i);
+ Y = Y + (product * fact * D(1, i + 1));
+end
+fprintf('Interpolated value Y = %f\n', Y);
+
+
+%lagrange interpolation
+x = input('Enter x values : ');
+y = input('Enter y values : ');
+X = input('Enter the y value to interpolate: ');
+n = length(x);
+Y = 0;
+for i = 1:n;
+ L=1;
+ for j = 1:n;
+ if i~=j
+ L = L*(X - x(j)) / (x(i) - x(j));
+ end
+ end
+ Y = Y + L * y(i);
+end
+disp(['Interpolated value is: ', num2str(Y)]);
+
+
+%backward Interpolation
+x = input('Enter xi values as an array: ');
+y = input('Enter yi values as an array: ');
+X = input('Enter X value: ');
+h = x(2) - x(1);
+n = length(x);
+D = zeros(n);
+for i = 1:n
+ D(i,1) = y(i);
+end
+for j = 2:n
+ for i = n:-1:j
+ D(i,j) = D(i,j-1) - D(i-1,j-1);
+ end
+end
+Y = y(n);
+product = 1;
+fact = 1;
+for i = 1:(n - 1)
+ product = product * (X - x(n - i + 1)) / h;
+ fact = fact * (1 / i);
+ Y = Y + (product * fact * D(n, i + 1));
+end
+fprintf('Interpolated value Y = %f\n', Y);
+
+
+%Euler's Method
+syms x 
+syms y
+f(x,y) = input("Enter f(x,y)")
+y1 = input("Enter y1 value")
+x1 = input("Enter x1 value")
+h = input("Enter Step Size")
+X = input("Enter X value")
+n = (X - x1)/h
+x = x1:h:X
+y = zeros(1, n+1)
+y(1) = y1
+for i = 2 : (n+1)
+ y(i) = y(i-1) + h * f(x(i-1),y(i-1))
+end
+disp(y(n+1))
+
+
+%Runge-Kutta 4th-order
+syms x 
+syms y
+f(x, y) = input("Enter f(x,y): ");
+y1 = input("Enter y1 value: ");
+x1 = input("Enter x1 value: ");
+h = input("Enter Step Size: ");
+X = input("Enter X value: ");
+n = (X - x1)/h; 
+x = x1:h:X;
+y = zeros(1, n+1); 
+y(1) = y1;
+for i = 2:(n+1)
+ k1 = h * f(x(i-1), y(i-1));
+ k2 = h * f(x(i-1) + h/2, y(i-1) + k1/2);
+ k3 = h * f(x(i-1) + h/2, y(i-1) + k2/2);
+ k4 = h * f(x(i-1) + h, y(i-1) + k3);
+ y(i) = y(i-1) + (k1 + 2*k2 + 2*k3 + k4) / 6;
+end
+disp(y(n+1));
+
+
+Curve Fitting
+A = [-6 -4 -2 0 2 4 6]
+B = [-0.2 0.8 -1.6 3.5 3.1 4.9 3.9]
+P = polyfit(A,B,6)
+plot(A,B,'k')
+hold on
+A = min(A):2:max(A)
+B = polyval(P,A)
+plot(A,B,'r')
+hold off
+
+
+%find poly of degree 3 for the data points , also create graph that shows
+%given data pts and poly function on same set of axes.
+x = [-3,-2,-1,0,1,2,3];
+y = [-28,-9,-2,-1,0,7,26];
+P = polyfit(x,y,3)
+plot(x,y,'*') 
+title("Curve Fiting")
+xlabel("x-axis")
+ylabel("y-axis")
+hold on
+X=min(x):0.1:max(x);
+Y=polyval(P,X);
+plot(X,Y) 
+%% 
+x =[-6,-4,-2,0,2,4,6];
+y = [-0.2,-0.8,-1.6,3.5,3.1,4.9,3.9];
+P = polyfit(x,y,6)
+plot(x,y,'o')
+title("curve fitting")
+xlabel("x-axis")
+ylabel("y-axis")
+hold on
+X=min(x):0.1:max(x);
+Y=polyval(P,X);
+plot(X,Y)
+%% 
+x=[2,4,6,8,10,12,14,16]
+y=[4.9,8.2,13.4,22.2,36.5,60.3,99.3,163.8];
+P = polyfit(x,y,7)
+plot(x,y,'r o')
+title("curve fitting")
+xlabel("x")
+ylabel("y")
+hold on
+X = min(x):0.1:max(x);
+Y = polyval(P,X);
+plot(X,Y)
+hold off
+
+
+
+2D
+x=-2:0.001:4;
+y=3.*x.^3-26.*x+10;
+subplot(2,3,1);
+plot(x,y,"r")
+
+xlabel("X axis")
+ylabel("Y axis")
+title("1st Graph")
+grid on;
+%% 
+x=-2:0.001:4;
+y=9.*x.^2-26;
+subplot(2,3,2);
+plot(x,y,"b")
+xlabel("X axis")
+ylabel("Y axis")
+title("2nd Graph")
+%% 
+x=-2:0.001:4;
+y=18.*x;
+subplot(2,3,3);
+plot(x,y,"b")
+xlabel("X axis")
+ylabel("Y axis")
+title("3rd Graph")
+%% 
+x=-2:0.001:4;
+y=18;
+subplot(2,3,4);
+plot(x,y,"b")
+xlabel("X axis")
+ylabel("Y axis")
+title("4th Graph")
+%% 
+x=-2:0.001:4;
+y=3.*x.^3-26.*x+10;
+subplot(2,3,6);
+hold on
+plot(x,y,"r")
+
+x=-2:0.001:4;
+y=9.*x.^2-26;
+plot(x,y,"b")
+
+x=-2:0.001:4;
+y=18.*x;
+plot(x,y,"k")
+
+x=-2:0.001:4;
+y=18;
+plot(x,y,"g")
+xlabel("X");
+ylabel("Y");
+title("5th Graph");
+legend("y = 3x^3 - 26x + 10", "y' = 9x^2 - 26", "y'' = 18x", "y''' = 18");
+grid on;
+hold off
+
+
+
+3D
+t = 0:0.001:6*pi;
+x = sqrt(t).*sin(2.*t);
+y = sqrt(t).*cos(2.*t);
+z= t/2;
+subplot(2,2,1)
+plot3(x,y,z,"r")
+xlabel("X axis")
+ylabel("Y axis")
+zlabel("Z axis")
+title("3D line plot")
+x = -4:0.1:4;
+y = -4:0.1:4;
+[x1,y1]=meshgrid(x,y)
+z = (x1.^2 + (3.*y1.^2)).*exp(1-x1.^2-y1.^2);
+subplot(2,2,2)
+mesh(x1,y1,z)
+xlabel("x-axis")
+ylabel("y-axis")
+zlabel("z-axis")
+title("MESHPLOT")
+x = -6:0.3:6;
+y = -6:0.3:6;
+[x1 y1] = meshgrid(x,y);
+z = sin(sqrt(x1.^2 + y1.^2))./(sqrt(x1.^2 + y1.^2));
+subplot(2,2,3)
+surf(x1,y1,z)
+xlabel("x-axis")
+ylabel("y-axis")
+zlabel("z-axis")
+title("SURFPLOT")
+
+t = 1:0.001:6*pi;
+x =( 2./t).*sin(2.*t);
+y = (2./t).*cos(2.*t);
+z = t./2;
+subplot(2,2,4)
+plot3(x,y,z,"r")
+xlabel("x-axis")
+ylabel("y-axis")
+zlabel("z-axis")
+title("3DPLOT")
+x=-4:0.25:4;
+y=-4:0.5:4;
+[X,Y]=meshgrid(x,y)
+Z=(X.^2+3.*Y.^2).*exp((1-X.^2-Y.^2))
+subplot(2,1,1),mesh(X,Y,Z)
+subplot(2,1,2),surf(X,Y,Z)
+x = (-3:3);
+y = [-0.2774 0.8954 -1.5651 3.4564  3.0601 4.8568 3.988];
+p = polyfit(x,y,3);
+x_fit = linspace(-3,3,100)
+y_fit = polyval(p,x_fit)
+plot(x,y,"r--o","LineWidth",1.5);
+plot(x_fit, y_fit, "b-")
+disp(p)
+
+
+% Data points
+x = [10^7, 1.1*10^7, 1.2*10^7, 1.3*10^7];
+y = [1, 2, 5, 10];
+
+% Fit a quadratic polynomial (degree 2)
+p = polyfit(x, y, 2);
+
+% Evaluate the polynomial at the points in x
+y_fit = polyval(p, x);
+
+% Create a range of x values for smooth plotting of the polynomial curve
+x_range = linspace(min(x), max(x), 100);
+y_range = polyval(p, x_range);
+
+% Plot the data points
+figure;
+plot(x, y, 'ro', 'MarkerFaceColor', 'r'); % Data points in red
+hold on;
+
+% Plot the fitted quadratic polynomial curve
+plot(x_range, y_range, 'b-', 'LineWidth', 2); % Polynomial in blue
+
+% Labels and title
+xlabel('x');
+ylabel('y');
+title('Quadratic Polynomial Fit to Data Points');
+legend('Data Points', 'Fitted Polynomial');
+grid on;
+hold off;

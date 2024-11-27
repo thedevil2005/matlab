@@ -1,0 +1,413 @@
+1. 2D plot
+
+x = -3:0.1:3
+y = x.^2 + 4 *sin(x) - 1
+plot(x,y,": k")
+xlabel("X AXIS")
+ylabel("Y AXIS")
+title("PLOT GRAPH")
+grid on
+%% 
+
+x = -2:0.01:4;
+y = (3.5).^(-0.5*x).*cos(6*x);
+plot(x,y,": k")
+xlabel("X AXIS")
+ylabel("Y AXIS")
+title("PLOT GRAPH")
+grid on
+
+%% plot 2 graphs
+x = -2:0.1:4;
+y = 3.*x.^3-26.*x +10;
+y1 = 9.*x.^2-26;
+y2 = 18.*x;
+y3 = 18.*x.^0; 
+plot(x,y,'r:')
+hold on
+plot(x,y1,'-.g')
+plot(x,y2,'-k')
+plot(x,y3,'--b')
+hold off
+xlabel("X AXIS")
+ylabel("Y AXIS")
+title("PLOT GRAPH")
+grid on
+%% divide fig window into 4 parts 
+x = -2:0.1:4;
+y = 3.*x.^3-26.*x +10;
+y1 = 9.*x.^2-26;
+y2 = 18.*x;
+y3 = 18.*x.^0; 
+subplot(2,2,1)
+plot(x,y,'r:')
+xlabel("X AXIS")
+ylabel("Y AXIS")
+title("PLOT GRAPH")
+grid on
+
+subplot(2,2,2)
+plot(x,y1,'-.g')
+xlabel("X AXIS")
+ylabel("Y AXIS")
+title("PLOT GRAPH")
+grid on
+
+subplot(2,2,3)
+plot(x,y2,'-k')
+xlabel("X AXIS")
+ylabel("Y AXIS")
+title("PLOT GRAPH")
+grid on
+
+subplot(2,2,4)
+plot(x,y3,'--b')
+xlabel("X AXIS")
+ylabel("Y AXIS")
+title("PLOT GRAPH")
+grid on
+
+3D Plot
+
+%Write matlab program to create 3D line plot of curve whose parametric
+%equation are follows x =  2/t .*sint2(t),y =  2/t .*cos2(t) ,z=
+%t/2,1<=t<=6.*pi
+t = 1:0.1:6*pi;
+x = 2./t.*sin(2.*t);
+y = 2./t.*cos(2.*t);
+z = t./2;
+plot3(x,y,z)
+xlabel("X-axis");
+ylabel("Y-axis");
+zlabel("Z-axis");
+title("Plot 3D Graph");
+%% x = tcost , y=tsint , -10*pi<=t<=10*pi
+%%take t along z -axis
+t = -10*pi:0.1:10*pi;
+x = t.*cos(t);
+y = t.*sin(t);
+z = t;
+plot3(x,y,z,'r--')
+xlabel("X-axis");
+ylabel("Y-axis");
+zlabel("Z-axis");
+title("3D Curve");
+grid on
+%% z=1.8.^-0.5.*sqrt(x.^2+y.^2) -3<=x,y<=3
+x = -3:0.5:3;
+y = -3:0.5:3;
+[x1,y1] = meshgrid(x,y);
+z = 1.8 .^(-0.5.*sqrt(x1.^2+y1.^2));
+subplot(1,2,1)
+mesh(x1,y1,z)
+xlabel("X-axis")
+ylabel("Y-axis")
+zlabel("Z-axis")
+title("3D Surface Plot")
+grid on
+
+subplot(1,2,2)
+surf(x1,y1,z)
+xlabel("X-axis")
+ylabel("Y-axis")
+zlabel("Z-axis")
+title("3D Surface Plot")
+grid on
+%% divide fig window into 4 plot 1. 3d line plot of function x = sqrt.t*sin2(t)
+t = 0:0.1:6*pi;
+x = sqrt(t).*sin(2.*t);
+y = sqrt(t).*cos(2.*t);
+z = t./2;
+subplot(2,2,1)
+plot3(x,y,z)
+xlabel("X-axis")
+ylabel("Y-axis")
+zlabel("Z-axis")
+title("Plot 3D line Graph")
+
+x1 = -3:0.1:3;
+y1 = -3:0.1:3;
+[x2,y2] = meshgrid(x,y);
+z1 = (x2.*y2.^2)./(x2.^2+y2.^2);
+subplot(2,2,2)
+mesh(x2,y2,z1)
+xlabel("X-axis");
+ylabel("Y-axis");
+zlabel("Z-axis");
+title("3D mesh Plot");
+grid on
+
+x3 = -6:0.8:6;
+y3= -6:0.8:6;
+[x4,y4] = meshgrid(x3,y3);
+z2 = sin(sqrt(x4.^2+y4.^2))./sqrt(x4.^2+y4.^2)
+subplot(2,2,3)
+surf(x3,y3,z2)
+xlabel("X-axis")
+ylabel("Y-axis")
+zlabel("Z-axis")
+title("3D surf Plot")
+grid on
+
+subplot(2,2,4)
+xlabel("X-axis")
+ylabel("Y-axis")
+zlabel("Z-axis")
+title("3D  Plot")
+grid on
+
+Trapezoidal/ Simpson
+
+x=input("x=");
+y=input("y=");
+h=x(2)-x(1);
+n=length(x);
+A=0;
+for i=2:n-1
+    A=A+y(i)*2;
+end
+
+I=h/2*(y(1)+y(n)+A)
+%%
+x=input('x= ');
+y=input('y= ');
+h=x(2)-x(1);
+n=length(x);
+A=0;
+B=0;
+
+    for i=2:2:n-2
+    A=A+y(i)*4;
+end
+for i=3:2:n-1
+    B=B+y(i)*2;
+end
+
+I = (h/3)*(y(1)+y(n)+A+B)
+%%
+x=input("x= ");
+y=input("y= ");
+
+h=x(2)-x(1);
+n=length(x);
+
+a=0;
+b=0;
+  for i=2:n-1
+    if mod(i-1,3)==0
+        a=a+y(i);
+    else
+        b=b+y(i);
+    end
+    end
+
+
+I=(3*h/8)*(y(1)+y(n)+3*b+2*a)
+
+Lagranges
+
+syms x
+int(log(x))
+%% Lagranges interpolation 
+x = input("x=");
+y = input("y=");
+X = input("X=");
+n = length(x);
+Y = 0;
+
+  for i=1:n
+      L(i)=1;
+      for j=1:n
+         if (i~=j)
+            L(i)=L(i)*(X-x(j))/(x(i)-x(j));
+         end
+      end
+   
+          Y=Y+y(i)*L(i);
+   end
+ disp(Y)
+
+  
+  
+   %% examples upper trangular matrix
+   y = input("y="); 
+   n=length(y);
+D=y';  % transpose
+for j = 2:n
+    for i = 1:n-j+1
+        D(i, j) = D(i+1, j-1) - D(i, j-1);
+    end
+end
+
+disp(D);
+%% example lower trangular matrix
+
+y = input('y = ');  
+n = length(y);     
+D = zeros(n);      
+D(:, 1) = y';       
+for j = 2:n
+    for i = 1:n-j+1
+        D(i, j) = D(i+1, j-1) - D(i, j-1); 
+    end
+end
+disp('Lower triangular matrix:')
+for i = 1:n
+    for j = 1:i  
+        fprintf('%f\t', D(i, j));
+    end
+    fprintf('\n'); 
+end
+%% Newtons interpolation forward
+x = input("x=");
+y = input("y=");
+X = input("X=");
+n = length(y);
+D=y';  % transpose
+for j = 2:n
+    for i = 1:n-j+1
+        D(i, j) = D(i+1, j-1) - D(i, j-1);
+    end
+end
+Y=y(1);
+h=x(2)-x(1);
+H=(X-x(1))/h;
+
+for k = 2:n
+    Y=Y+H*D(1,k)/factorial(k-1);
+    H = H*(X-x(k))/h;
+end
+disp(Y)
+
+%% Newtons interpolation backward
+x = input("x=");
+y = input("y=");
+X = input("X=");
+n = length(y);
+D=y';  % transpose
+for j = 2:n
+    for i = 1:n-j+1
+        D(i, j) = D(i+1, j-1) - D(i, j-1);
+    end
+end
+Y=y(n);
+h=x(2)-x(1);
+H=(X-x(n))/h;
+
+for k = 2:n
+    Y=Y+H*D(n-k+1,k)/factorial(k-1);
+    H = H*(X-x(n-k+1))/h;
+end
+disp(Y);
+
+Curve fitting
+
+x = -0.2:0.1:0.2;
+y = [1.2214,1.1052,1,0.9048,0.8187];
+p=polyfit(x,y,3);
+plot(x,y,'pk')
+hold on 
+xc = min(x):0.1:max(x)
+yc = polyval(p,x)
+plot(xc,yc)
+hold off
+%% best fit polynomial
+x = -6:2:6;
+y = [-0.2,0.8,-1.6,3.5,3.1,4.9,3.9];
+p=polyfit(x,y,6);
+plot(x,y,'pk')
+hold on 
+xc = min(x):2:max(x)
+yc = polyval(p,x)
+plot(xc,yc)
+hold off
+%% Exponential function
+x = 1:2:13;
+y = [0.7358,0.0996,0.0135,0.0018,0.0003,0.00003,0.000005];
+p=polyfit(x,y,6);
+plot(x,y,':r');
+hold on
+a = p(1);
+b = exp(p(2));
+y = b.*exp(a.*x)
+x  = min(x):2:max(x)
+plot(x,y);
+hold off
+%% 1st exercise
+x =-6:2:6 ;
+y =[-0.2,0.8,-1.6,3.5,3.1,4.9,3.9] ;
+p=polyfit(x,y,6);
+plot(x,y,'p:k')
+hold on
+x1 = -6:2:6;
+y1 = [-0.2,0.8,-1.6,3.5,3.1,4.9,3.9];
+p=polyfit(x1,y1,6);
+plot(x,y,'pk')
+xc = min(x):0.1:max(x)
+yc = polyval(p,x)
+plot(xc,yc)
+title("Points and best fit Curve")
+xlabel("X-axis")
+ylabel("Y-axis")
+grid on
+hold off
+
+
+%% 2nd example
+
+x = 2:2:16;
+y = [4.9462,8.1549,13.4451,22.1672,36.5475,60.2566,99.3464,163.7945];
+p=polyfit(x,y,7);
+plot(x,y,'p:k');
+hold on
+a = p(1);
+b = exp(p(2));
+y = b.*exp(a.*x)
+x  = min(x):2:max(x)
+plot(x,y);
+title("Exponential Curve")
+xlabel("X-axis")
+ylabel("Y-axis")
+grid on
+hold off
+
+
+Eulers
+
+% Euler's method
+syms f(x,y)
+f(x,y)=sqrt (x+y);
+x0=0;
+y0=1;
+X=2;
+h=0.1;
+n=(X-x0)/h;
+y1=y0;
+x1=x0;
+for i=1:n 
+    y2=y1+h*double(f(x1,y1));
+    x1=x1+h;
+    y1=y2;
+    
+end
+disp(y2)
+%% %Runge-kutta method 
+f = @(x, y) (1 / x^2) - (y / x);
+% Parameters with r = 56
+r = 56;
+x0 = 57;      
+y0 = -54;     
+X = 60;       
+n = 30;       
+h = (X - x0) / n;  
+x = x0;
+y = y0;
+for i = 1:n
+    k1 = h * f(x, y);
+    k2 = h * f(x + h / 2, y + k1 / 2);
+    k3 = h * f(x + h / 2, y + k2 / 2);
+    k4 = h * f(x + h, y + k3);
+    y = y + (k1 + 2 * k2 + 2 * k3 + k4) / 6;
+    x = x + h;
+end
+disp(['The value of y at x = 60 is: ', num2str(y)]);
